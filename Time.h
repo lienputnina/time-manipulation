@@ -7,8 +7,8 @@ using namespace std;
 
 class Time {
 
+  friend istream &operator>>(istream &, Time &);
   friend ostream &operator<<(ostream &, const Time &);
-  friend istream &operator>>(istream &, const Time &);
 
 private:
   int second;
@@ -18,12 +18,12 @@ private:
 public:
   Time(int second, int minute, int hour);
 
-  // kopijas konstruktors
   // See, if we need it
   Time(const Time &object);
   ~Time();
 
-  const Time &operator=(const Time &);
+  // Time & - return type - reference to an object
+  Time &operator=(const Time &);
 
   Time &operator++();   // Prefix increment
   Time operator++(int); // Postfix increment
