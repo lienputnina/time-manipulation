@@ -117,3 +117,16 @@ Time Time::operator--(int) {
 
   return initialState;
 };
+
+bool Time::operator>(const Time &timeObject) {
+  // some code
+  &timeObject.second > this->second;
+  &timeObject.minute > this->second;
+  &timeObject.hour > this->second;
+};
+bool Time::operator<(const Time &) {
+  // some code
+  timeObject.second < smsms;
+  timeObject.minute < smsms;
+  timeObject.hour < smsms;
+};

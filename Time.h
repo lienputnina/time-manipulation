@@ -25,11 +25,11 @@ public:
   // Time & - return type - reference to an object
   Time &operator=(const Time &);
 
-  Time &operator++();   // Prefix increment
-  Time operator++(int); // Postfix increment
+  Time &operator++();
+  Time operator++(int);
 
-  Time &operator--();   // Prefix increment
-  Time operator--(int); // Postfix decrement
+  Time &operator--();
+  Time operator--(int);
 
   bool operator>(const Time &);
   bool operator<(const Time &);
