@@ -60,62 +60,60 @@ Time &Time::operator=(const Time &rightHandObject) {
 
 // Prefix increment
 Time &Time::operator++() {
-  /*
-  if it's the last second value, increment minute as well
-  else - increment only second
-  */
-  if (second > 59) {
-    ++second && ++minute; // is this legal?
-  }
-
   ++second;
-
-  return *this; // really?
+  if (second == 60) {
+    second = 0;
+    ++minute;
+    if (minute == 60) {
+      minute = 0;
+    }
+  }
+  return *this;
 };
 
 // Postfix increment
-Time Time::operator++(int newMinuteValue) {
-  /*
-  if it's the last minute value, increment minute and hour
-  else - increment only minute
-  */
-  if (minute > 59) {
-    minute++ &&hour++; // is this legal?
-  }
+Time Time::operator++(int) {
+  Time initialState = *this;
 
   minute++;
 
-  return *this; // really?
+  if (minute == 60) {
+    minute = 0;
+    hour++;
+    if (hour == 24) {
+      hour = 0;
+    }
+  }
+
+  return initialState;
 };
 
-// Prefix increment
+// Prefix decrement
 Time &Time::operator--() {
-  /*
-  if it's the first second value, decrement minute as well
-  else - decrement only second
-  */
-
-  // change this
-  if (second >= 0) {
-    --second && --minute; // is this legal?
+  if (second == 0) {
+    if (minute > 0) {
+      --minute;
+      second = 59;
+    }
+  } else {
+    --second;
   }
-
-  --second;
-
-  return *this; // really?
+  return *this;
 };
 
-// Postfix increment
+// Postfix decrement
 Time Time::operator--(int) {
-  /*
-  if it's the last minute value, decrement hour as well
-  else - decrement only minute
-  */
-  if (minute > 59) {
-    minute-- &&hour--;
+
+  Time initialState = *this;
+
+  if (second == 0) {
+    if (minute > 0) {
+      minute--;
+      second = 59;
+    }
+  } else {
+    second--;
   }
 
-  minute--;
-
-  return *this;
+  return initialState;
 };
