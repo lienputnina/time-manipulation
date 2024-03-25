@@ -17,13 +17,8 @@ private:
 
 public:
   Time(int second, int minute, int hour);
-
-  // See, if we need it
   Time(const Time &object);
   ~Time();
-
-  // Time & - return type - reference to an object
-  Time &operator=(const Time &);
 
   Time &operator++();
   Time operator++(int);
@@ -31,14 +26,16 @@ public:
   Time &operator--();
   Time operator--(int);
 
-  bool operator>(const Time &);
-  bool operator<(const Time &);
+  // Time & - return type - reference to an object
+  Time &operator=(const Time &);
+  bool operator>(const Time &) const;
+  bool operator<(const Time &) const;
 
-  bool operator>=(const Time &);
-  bool operator<=(const Time &);
+  bool operator>=(const Time &) const;
+  bool operator<=(const Time &) const;
 
-  bool operator==(const Time &otherArray) const;
-  bool operator!=(const Time &otherArray) const;
+  bool operator==(const Time &) const;
+  bool operator!=(const Time &) const;
 };
 
 #endif

@@ -3,8 +3,6 @@
 #include <iostream>
 using namespace std;
 
-// rename "timeObject"
-
 Time::Time(int timeSecond, int timeMinute, int timeHour) {
   int second = (timeSecond >= 0 && timeSecond < 60) ? timeSecond : 0;
   int minute = (timeMinute >= 0 && timeMinute < 60) ? timeMinute : 0;
@@ -46,17 +44,6 @@ ostream &operator<<(ostream &output, const Time &timeObject) {
          << timeObject.second;
   return output;
 }
-
-// Assignment method
-Time &Time::operator=(const Time &rightHandObject) {
-  if (this != &rightHandObject) {
-    this->hour = rightHandObject.hour;
-    this->minute = rightHandObject.minute;
-    this->second = rightHandObject.second;
-  }
-
-  return *this;
-};
 
 // Prefix increment
 Time &Time::operator++() {
@@ -118,15 +105,41 @@ Time Time::operator--(int) {
   return initialState;
 };
 
-bool Time::operator>(const Time &timeObject) {
-  // some code
-  &timeObject.second > this->second;
-  &timeObject.minute > this->second;
-  &timeObject.hour > this->second;
+// Assignment method
+Time &Time::operator=(const Time &rightHandObject) {
+  if (this != &rightHandObject) {
+    this->hour = rightHandObject.hour;
+    this->minute = rightHandObject.minute;
+    this->second = rightHandObject.second;
+  }
+
+  return *this;
 };
-bool Time::operator<(const Time &) {
-  // some code
-  timeObject.second < smsms;
-  timeObject.minute < smsms;
-  timeObject.hour < smsms;
+
+bool Time::operator>(const Time &rightHandObject) const {
+  return (hour > rightHandObject.hour) ||
+         (hour == rightHandObject.hour && minute > rightHandObject.minute) ||
+         (hour == rightHandObject.hour && minute == rightHandObject.minute &&
+          second > rightHandObject.second);
+};
+bool Time::operator<(const Time &rightHandObject) const {
+  return (hour < rightHandObject.hour) ||
+         (hour == rightHandObject.hour && minute < rightHandObject.minute) ||
+         (hour == rightHandObject.hour && minute == rightHandObject.minute &&
+          second < rightHandObject.second);
+};
+
+bool Time::operator>=(const Time &rightHandObject) const {
+  return !(*this > rightHandObject);
+};
+bool Time::operator<=(const Time &rightHandObject) const {
+  return !(*this < rightHandObject);
+};
+
+bool Time::operator==(const Time &rightHandObject) const {
+  return hour == rightHandObject.hour && minute == rightHandObject.minute &&
+         second == rightHandObject.second;
+};
+bool Time::operator!=(const Time &rightHandObject) const {
+  return !(*this == rightHandObject);
 };
