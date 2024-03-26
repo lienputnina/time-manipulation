@@ -3,9 +3,9 @@
 using namespace std;
 
 Time::Time(int timeHour, int timeMinute, int timeSecond) {
-  int hour = (timeHour >= 0 && timeHour < 24) ? timeHour : 0;
-  int minute = (timeMinute >= 0 && timeMinute < 60) ? timeMinute : 0;
-  int second = (timeSecond >= 0 && timeSecond < 60) ? timeSecond : 0;
+  hour = (timeHour >= 0 && timeHour < 24) ? timeHour : 0;
+  minute = (timeMinute >= 0 && timeMinute < 60) ? timeMinute : 0;
+  second = (timeSecond >= 0 && timeSecond < 60) ? timeSecond : 0;
 }
 
 Time::Time(const Time &timeObject) {
@@ -37,9 +37,8 @@ istream &operator>>(istream &input, Time &timeObject) {
 ostream &operator<<(ostream &output, const Time &timeObject) {
   // setw - sets width of output to 2
   // set fill - fills empty space with 0 for 09:05:01 etc.
-  output << "The current time is: " << setw(2) << setfill('0')
-         << timeObject.hour << ":" << setw(2) << setfill('0')
-         << timeObject.minute << ":" << setw(2) << setfill('0')
+  output << setw(2) << setfill('0') << timeObject.hour << ":" << setw(2)
+         << setfill('0') << timeObject.minute << ":" << setw(2) << setfill('0')
          << timeObject.second;
   return output;
 }
@@ -115,6 +114,7 @@ Time &Time::operator=(const Time &rightHandObject) {
   return *this;
 };
 
+// Comparison operators
 bool Time::operator>(const Time &rightHandObject) const {
   return (hour > rightHandObject.hour) ||
          (hour == rightHandObject.hour && minute > rightHandObject.minute) ||
@@ -129,10 +129,10 @@ bool Time::operator<(const Time &rightHandObject) const {
 };
 
 bool Time::operator>=(const Time &rightHandObject) const {
-  return !(*this > rightHandObject);
+  return !(*this < rightHandObject);
 };
 bool Time::operator<=(const Time &rightHandObject) const {
-  return !(*this < rightHandObject);
+  return !(*this > rightHandObject);
 };
 
 bool Time::operator==(const Time &rightHandObject) const {
