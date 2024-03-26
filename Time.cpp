@@ -1,18 +1,17 @@
 #include "Time.h"
 #include <iomanip>
-#include <iostream>
 using namespace std;
 
-Time::Time(int timeSecond, int timeMinute, int timeHour) {
-  int second = (timeSecond >= 0 && timeSecond < 60) ? timeSecond : 0;
-  int minute = (timeMinute >= 0 && timeMinute < 60) ? timeMinute : 0;
+Time::Time(int timeHour, int timeMinute, int timeSecond) {
   int hour = (timeHour >= 0 && timeHour < 24) ? timeHour : 0;
+  int minute = (timeMinute >= 0 && timeMinute < 60) ? timeMinute : 0;
+  int second = (timeSecond >= 0 && timeSecond < 60) ? timeSecond : 0;
 }
 
 Time::Time(const Time &timeObject) {
-  second = timeObject.second;
-  minute = timeObject.minute;
   hour = timeObject.hour;
+  minute = timeObject.minute;
+  second = timeObject.second;
 };
 
 Time::~Time() { cout << "Time is up!" << endl; }

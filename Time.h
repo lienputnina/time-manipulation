@@ -2,7 +2,6 @@
 #define TIME_H
 
 #include <iostream>
-
 using namespace std;
 
 class Time {
@@ -11,12 +10,12 @@ class Time {
   friend ostream &operator<<(ostream &, const Time &);
 
 private:
-  int second;
-  int minute;
   int hour;
+  int minute;
+  int second;
 
 public:
-  Time(int second, int minute, int hour);
+  Time(int hour, int minute, int second);
   Time(const Time &object);
   ~Time();
 
