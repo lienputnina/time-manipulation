@@ -17,18 +17,36 @@ Time::Time(const Time &timeObject) {
 
 istream &operator>>(istream &input, Time &timeObject) {
 
-  cout << "Please, enter hours, minutes, seconds separated by spaces " << endl;
-  input >> timeObject.hour >> timeObject.minute >> timeObject.second;
+  cout << "Please, enter hours, minutes and seconds separated by spaces "
+       << endl;
 
-  // change formatting for this, if timeObject = timeObject
-  timeObject.hour =
-      (timeObject.hour >= 0 && timeObject.hour < 24) ? timeObject.hour : 0;
-  timeObject.minute = (timeObject.minute >= 0 && timeObject.minute < 60)
-                          ? timeObject.minute
-                          : 0;
-  timeObject.second = (timeObject.second >= 0 && timeObject.second < 60)
-                          ? timeObject.second
-                          : 0;
+  string line;
+  // Read the whole line
+  getline(input, line);
+  // Use stringstream for parsing
+  stringstream timeInputStream(line);
+
+  timeInputStream >> timeObject.hour >> timeObject.minute >> timeObject.second;
+
+  if (timeInputStream.fail()) {
+    cout
+        << "Invalid input. Please, enter three integers separated by spaces.\n";
+
+    // Reset timeObject to a safe state
+    timeObject.hour = 0;
+    timeObject.minute = 0;
+    timeObject.second = 0;
+    input.clear();
+  } else {
+    timeObject.hour =
+        (timeObject.hour >= 0 && timeObject.hour < 24) ? timeObject.hour : 0;
+    timeObject.minute = (timeObject.minute >= 0 && timeObject.minute < 60)
+                            ? timeObject.minute
+                            : 0;
+    timeObject.second = (timeObject.second >= 0 && timeObject.second < 60)
+                            ? timeObject.second
+                            : 0;
+  }
 
   return input;
 };
