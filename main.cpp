@@ -12,6 +12,7 @@ int getIntInput() {
       cin.clear();
       cin.ignore(256, '\n');
     } else {
+      cin.ignore(256, '\n');
       continueLoop = false;
     }
   }
@@ -39,12 +40,24 @@ int main() {
     timeObject1 = timeObject2 = timeObject3;
 
     cout << "\nAfter synchronizing, the times are: " << endl;
-    cout << "Time 1 is " << timeObject1 << endl;
-    cout << "Time 2 is " << timeObject2 << endl;
-    cout << "Time 3 is " << timeObject3 << endl;
+    cout << timeObject1 << " , " << timeObject2 << " and " << timeObject3
+         << endl;
 
-    cout << "\nEnter 1 to continue or 0 to quit:\n\n";
+    cout << "Would you like to update the times? (1 for Yes, 0 for No): ";
 
+    int updateTimes;
+    updateTimes = getIntInput();
+
+    if (updateTimes == 1) {
+      cout << " New Time 1: " << endl;
+      cin >> timeObject1;
+      cout << "New Time 2: " << endl;
+      cin >> timeObject2;
+      cout << " New Time 3: " << endl;
+      cin >> timeObject3;
+    }
+
+    cout << "Enter 1 to continue or 0 to quit: " << endl;
     repeatExecution = getIntInput();
 
   } while (repeatExecution != 0);
