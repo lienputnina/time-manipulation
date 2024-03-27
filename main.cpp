@@ -2,6 +2,7 @@
 using namespace std;
 
 int main() {
+  // Commit reset check
   Time timeObject1(5, 14, 59);
   Time timeObject2(12, 25, 6);
 
