@@ -1,5 +1,6 @@
 #include "Time.h"
 #include <iomanip>
+
 using namespace std;
 
 Time::Time(int timeHour, int timeMinute, int timeSecond) {
@@ -13,8 +14,6 @@ Time::Time(const Time &timeObject) {
   minute = timeObject.minute;
   second = timeObject.second;
 };
-
-Time::~Time() { cout << "Time is up!" << endl; }
 
 istream &operator>>(istream &input, Time &timeObject) {
 
@@ -61,6 +60,7 @@ Time Time::operator++(int) {
   Time initialState = *this;
 
   minute++;
+  second = 0;
 
   if (minute == 60) {
     minute = 0;
@@ -91,13 +91,15 @@ Time Time::operator--(int) {
 
   Time initialState = *this;
 
-  if (second == 0) {
-    if (minute > 0) {
-      minute--;
-      second = 59;
+  if (minute == 0) {
+    if (hour > 0) {
+      hour--;
+      minute = 59;
+      second = 0;
     }
   } else {
-    second--;
+    minute--;
+    second = 0;
   }
 
   return initialState;

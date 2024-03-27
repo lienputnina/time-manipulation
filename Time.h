@@ -17,7 +17,6 @@ private:
 public:
   Time(int hour, int minute, int second);
   Time(const Time &object);
-  ~Time();
 
   Time &operator++();
   Time operator++(int);
@@ -25,7 +24,6 @@ public:
   Time &operator--();
   Time operator--(int);
 
-  // Time & - return type - reference to an object
   Time &operator=(const Time &);
   bool operator>(const Time &) const;
   bool operator<(const Time &) const;
