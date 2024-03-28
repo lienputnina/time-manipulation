@@ -25,6 +25,7 @@ public:
   Time operator--(int);
 
   Time &operator=(const Time &);
+
   bool operator>(const Time &) const;
   bool operator<(const Time &) const;
 
