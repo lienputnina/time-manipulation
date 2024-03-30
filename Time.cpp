@@ -62,11 +62,12 @@ ostream &operator<<(ostream &output, const Time &timeObject) {
   return output;
 }
 
-// Prefix increment
+// Prefix increment - incrementing seconds
 Time &Time::operator++() {
   ++second;
   if (second == 60) {
     ++minute;
+    second = 0;
     if (minute == 60) {
       minute = 0;
     }
@@ -74,14 +75,14 @@ Time &Time::operator++() {
   return *this;
 };
 
-// Postfix increment
+// Postfix increment - incrementing minutes
 Time Time::operator++(int) {
   Time initialState = *this;
-
   minute++;
 
   if (minute == 60) {
     hour++;
+    minute = 0;
     if (hour == 24) {
       hour = 0;
     }
