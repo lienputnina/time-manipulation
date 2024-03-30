@@ -16,15 +16,12 @@ private:
 
 public:
   Time(int hour, int minute, int second);
-  Time(const Time &object);
 
   Time &operator++();
   Time operator++(int);
 
   Time &operator--();
   Time operator--(int);
-
-  Time &operator=(const Time &);
 
   bool operator>(const Time &) const;
   bool operator<(const Time &) const;
@@ -34,6 +31,8 @@ public:
 
   bool operator==(const Time &) const;
   bool operator!=(const Time &) const;
+
+  Time &operator=(const Time &);
 };
 
 #endif

@@ -1,4 +1,6 @@
 #include "Time.h"
+#include <limits>
+
 using namespace std;
 
 int getIntInput() {
@@ -10,9 +12,9 @@ int getIntInput() {
     if (cin.fail()) {
       cout << "Invalid input. Please, enter an integer\n";
       cin.clear();
-      cin.ignore(256, '\n');
+      cin.ignore(numeric_limits<streamsize>::max(), '\n');
     } else {
-      cin.ignore(256, '\n');
+      cin.ignore(numeric_limits<streamsize>::max(), '\n');
       continueLoop = false;
     }
   }
@@ -25,104 +27,83 @@ int main() {
   int repeatExecution = 0;
 
   do {
-    Time timeObject1(5, 14, 59);
-    Time timeObject2(12, 25, 6);
-    Time timeObject3(16, 45, 0);
 
-    cin >> timeObject1;
-    cout << "Time 1 is now: " << timeObject1 << endl;
+    cout << "Creating the first time object:" << endl;
+    Time time1(5, 14, 59);
+    cin >> time1;
+    cout << "Time 1 is: " << time1 << endl;
+    cout << "\n";
 
-    cin >> timeObject2;
-    cout << "Time 2 is now: " << timeObject2 << endl;
+    cout << "Creating the second time object:" << endl;
+    Time time2(12, 25, 6);
+    cin >> time2;
+    cout << "Time 2: " << time2 << endl;
+    cout << "\n";
 
-    cin >> timeObject3;
-    cout << "Time 3 is now: " << timeObject3 << endl;
+    cout << "Creating the third time object:" << endl;
+    Time time3(16, 45, 0);
+    cin >> time3;
+    cout << "Time 3: " << time3 << endl;
+    cout << "\n";
 
-    timeObject1 = timeObject2 = timeObject3;
+    cout << "++time1:" << endl;
+    ++time1;
+    cout << time1 << endl;
+    cout << "\n";
 
-    cout << "\nAfter synchronizing, the times are: " << endl;
-    cout << timeObject1 << " , " << timeObject2 << " and " << timeObject3
-         << endl;
+    cout << "++time2:" << endl;
+    ++time2;
+    cout << time2 << endl;
+    cout << "\n";
 
-    cout << "Would you like to update the times? (1 for Yes, 0 for No): ";
+    cout << "time1++:" << endl;
+    time1++;
+    cout << time1 << endl;
+    cout << "\n";
 
-    int updateTimes;
-    updateTimes = getIntInput();
+    cout << "time2++:" << endl;
+    time2++;
+    cout << time2 << endl;
+    cout << "\n";
 
-    // do {
-    //   cout << " New Time 1: " << endl;
-    //   cin >> timeObject1;
-    //   cout << "New Time 2: " << endl;
-    //   cin >> timeObject2;
-    //   cout << " New Time 3: " << endl;
-    //   cin >> timeObject3;
-    // } while (updateTimes != 1);
+    cout << "--time1:" << endl;
+    --time1;
+    cout << time1 << endl;
+    cout << "\n";
 
-    if (updateTimes == 1) {
-      cout << "New Time 1 is: " << endl;
-      cin >> timeObject1;
-      cout << "New Time 2 is: " << endl;
-      cin >> timeObject2;
-      cout << "New Time 3 is: " << endl;
-      cin >> timeObject3;
-    }
+    cout << "--time2:" << endl;
+    --time2;
+    cout << time2 << endl;
+    cout << "\n";
 
-    // Increment/decrement operator check
-    ++timeObject1;
-    ++timeObject2;
+    cout << "time1--:" << endl;
+    time1--;
+    cout << time1 << endl;
+    cout << "\n";
 
-    cout << "Incrementing seconds by 1: " << endl;
-    cout << "Time 1 after is now: " << timeObject1 << endl;
-    cout << "Time 2 after is now: " << timeObject2 << endl;
+    cout << "time2--:" << endl;
+    time2--;
+    cout << time2 << endl;
+    cout << "\n";
 
-    timeObject1++;
-    timeObject2++;
+    cout << "Time1 < Time2: " << (time1 < time2) << endl;
+    cout << "Time1 > Time2: " << (time1 > time2) << endl;
+    cout << "\n";
 
-    cout << "Incrementing minutes by 1: " << endl;
-    cout << "Time 1 is now: " << timeObject1 << endl;
-    cout << "Time 2 is now: " << timeObject2 << endl;
+    cout << "Time1 <= Time2: " << (time1 <= time2) << endl;
+    cout << "Time1 >= Time2: " << (time1 >= time2) << endl;
+    cout << "\n";
 
-    --timeObject1;
-    --timeObject2;
+    cout << "Time1 == Time2: " << (time1 == time2) << endl;
+    cout << "Time1 != Time2: " << (time1 != time2) << endl;
+    cout << "\n";
 
-    cout << "Decrementing seconds by 1" << endl;
-    cout << "Time 1 is now: " << timeObject1 << endl;
-    cout << "Time 2 is now: " << timeObject2 << endl;
+    cout << "Time1 = Time2 = Time3:" << endl;
+    time1 = time2 = time3;
+    cout << time1 << " , " << time2 << " and " << time3 << endl;
+    cout << "\n";
 
-    timeObject1--;
-    timeObject2--;
-
-    cout << "Decrementing minutes by 1" << endl;
-    cout << "Time 1 is now: " << timeObject1 << endl;
-    cout << "Time 2 is now: " << timeObject2 << endl;
-
-    // Comparison operator check
-    if (timeObject1 > timeObject2) {
-      cout << timeObject1 << " is bigger than " << timeObject2 << endl;
-    } else if (timeObject1 < timeObject2) {
-      cout << timeObject1 << " is smaller than " << timeObject2 << endl;
-    } else {
-      cout << timeObject1 << " is equal to " << timeObject2 << endl;
-    }
-
-    // Change the message smh
-    if (timeObject1 >= timeObject2) {
-      cout << timeObject1 << " is bigger than or equal to " << timeObject2
-           << endl;
-    } else if (timeObject1 <= timeObject2) {
-      cout << timeObject1 << " is smaller than or equal to " << timeObject2
-           << endl;
-    } else {
-      cout << timeObject1 << " is equal to " << timeObject2 << endl;
-    }
-
-    if (timeObject1 == timeObject2) {
-      cout << timeObject1 << " is exactly equal to " << timeObject2 << endl;
-    } else if (timeObject1 != timeObject2) {
-      cout << timeObject1 << " is not equal to " << timeObject2 << endl;
-    };
-
-    cout << "Enter 1 to continue or 0 to quit: " << endl;
+    cout << "Enter 1 to start again or 0 to quit: " << endl;
     repeatExecution = getIntInput();
 
   } while (repeatExecution != 0);
