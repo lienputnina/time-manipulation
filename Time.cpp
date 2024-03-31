@@ -5,6 +5,13 @@
 using namespace std;
 
 Time::Time(int timeHour, int timeMinute, int timeSecond) {
+  /*
+  Initializing Time member variables and doing validation for hours,
+  minutes and seconds to ensure they are within acceptable ranges:
+  - hours: valid range is 0 to 23. Defaults to 0 if outside this range.
+  - minutes: valid range is 0 to 59. Defaults to 0 if outside this range.
+  - seconds: valid range is 0 to 59. Defaults to 0 if outside this range.
+  */
   hour = (timeHour >= 0 && timeHour < 24) ? timeHour : 0;
   minute = (timeMinute >= 0 && timeMinute < 60) ? timeMinute : 0;
   second = (timeSecond >= 0 && timeSecond < 60) ? timeSecond : 0;
@@ -12,16 +19,19 @@ Time::Time(int timeHour, int timeMinute, int timeSecond) {
 
 istream &operator>>(istream &input, Time &timeObject) {
 
-  bool inputIsValid = false; // Flag to track if the input is valid
+  // Tracking the validity of the user input
+  bool inputIsValid = false;
 
   while (!inputIsValid) {
     cout << "Please, enter hours, minutes and seconds separated by spaces"
          << endl;
 
     string line;
-    // Read the whole line
+
+    // Reading the whole line of input
     getline(input, line);
-    // Use stringstream for parsing
+
+    // Facilitating parsing of the line
     stringstream timeInputStream(line);
 
     // Attempting to parse the input
@@ -46,7 +56,8 @@ istream &operator>>(istream &input, Time &timeObject) {
       timeObject.second = (timeObject.second >= 0 && timeObject.second < 60)
                               ? timeObject.second
                               : 0;
-      inputIsValid = true; // Setting the flag to true as the input is now valid
+      inputIsValid =
+          true; // Setting the variable to true as the input is now valid
     }
   }
 
@@ -54,67 +65,91 @@ istream &operator>>(istream &input, Time &timeObject) {
 };
 
 ostream &operator<<(ostream &output, const Time &timeObject) {
-  // setw - sets width of output to 2
-  // set fill - fills empty space with 0 for 09:05:01 etc.
+  /*
+    Formatting time in hh:mm:ss format with leading zeros for single-digit
+    values
+  */
   output << setw(2) << setfill('0') << timeObject.hour << ":" << setw(2)
          << setfill('0') << timeObject.minute << ":" << setw(2) << setfill('0')
          << timeObject.second;
   return output;
 }
 
-// Prefix increment - incrementing seconds
 Time &Time::operator++() {
+  // Incrementing minutes
   ++second;
   if (second == 60) {
+    // Incrementing minutes, when the last value of seconds is reached
     ++minute;
+    // Resetting seconds, when their last value is reached
     second = 0;
     if (minute == 60) {
+      // Resetting minutes, when their last value is reached
       minute = 0;
     }
   }
   return *this;
 };
 
-// Postfix increment - incrementing minutes
 Time Time::operator++(int) {
+  /*
+  Saving the objects initial state to return it later
+  */
   Time initialState = *this;
+
+  // Incrementing minutes
   minute++;
 
   if (minute == 60) {
+    // Incrementing hours, when the last value of minutes is reached
     hour++;
+    // Resetting minutes when their last value is reached
     minute = 0;
     if (hour == 24) {
+      // Resetting hours after completing a day
       hour = 0;
     }
   }
 
+  // Returning the objects original state before increment
   return initialState;
 };
 
-// Prefix decrement
 Time &Time::operator--() {
+  /*
+   Decrementing minutes if the first value of seconds is reached
+  */
   if (second == 0) {
     if (minute > 0) {
       --minute;
+
+      // Decrementing seconds to their penultimate value
       second = 59;
     }
   } else {
+    // Decrementing seconds
     --second;
   }
   return *this;
 };
 
-// Postfix decrement
 Time Time::operator--(int) {
-
+  /*
+    Saving the objects initial state to return it later
+    */
   Time initialState = *this;
 
   if (minute == 0) {
     if (hour > 0) {
+      /*
+         Decrementing hours if the first value of minutes is reached
+        */
       hour--;
+      // Decrementing minutes to their penultimate value
       minute = 59;
     }
   } else {
+    // Decrementing minutes
     minute--;
   }
 
@@ -122,6 +157,12 @@ Time Time::operator--(int) {
 };
 
 bool Time::operator>(const Time &rightHandObject) const {
+  /*
+Returns true, if:
+- The hours are bigger than rightHand object's hours
+- Hours are the same, but minutes are bigger
+- Minutes and hours are the same, but seconds are bigger
+*/
   return (hour > rightHandObject.hour) ||
          (hour == rightHandObject.hour && minute > rightHandObject.minute) ||
          (hour == rightHandObject.hour && minute == rightHandObject.minute &&
@@ -129,6 +170,12 @@ bool Time::operator>(const Time &rightHandObject) const {
 };
 
 bool Time::operator<(const Time &rightHandObject) const {
+  /*
+Returns true, if:
+- The hours are smaller than right-hand-side object's hours
+- hours are the same, but minutes are smaller
+- minutes and hours are the same, but seconds are smaller
+*/
   return (hour < rightHandObject.hour) ||
          (hour == rightHandObject.hour && minute < rightHandObject.minute) ||
          (hour == rightHandObject.hour && minute == rightHandObject.minute &&
@@ -136,10 +183,18 @@ bool Time::operator<(const Time &rightHandObject) const {
 };
 
 bool Time::operator>=(const Time &rightHandObject) const {
+  /*
+  Returns true, if the left-hand-side object is not smaller than the
+  right-hand-side object
+  */
   return !(*this < rightHandObject);
 };
 
 bool Time::operator<=(const Time &rightHandObject) const {
+  /*
+ Returns true, if the left-hand-side object is not bigger than the
+ right-hand-side object
+ */
   return !(*this > rightHandObject);
 };
 
@@ -147,10 +202,18 @@ bool Time::operator==(const Time &rightHandObject) const {
   return hour == rightHandObject.hour && minute == rightHandObject.minute &&
          second == rightHandObject.second;
 };
+
 bool Time::operator!=(const Time &rightHandObject) const {
+  /*
+Returns true, if the left-hand-side object is not equal to the
+right-hand-side object
+*/
   return !(*this == rightHandObject);
 };
 
+/*
+Assigns all values of the left-hand-side object to the right-hand-side object
+*/
 Time &Time::operator=(const Time &rightHandObject) {
   if (this != &rightHandObject) {
     this->hour = rightHandObject.hour;
