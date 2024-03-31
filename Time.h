@@ -7,9 +7,8 @@ using namespace std;
 class Time {
 
   /*
-  Declaring friendly functions for input/output operators. This approach allows
-  the Time class to be directly input from and output to streams like 'cin''and
-  'cout', which themselves are instances of 'istream' and 'ostream' classes.
+  Declaring friendly functions for input/output operators.
+  This approach allows the Time class to use 'cin' and 'cout' streams
   */
   friend istream &operator>>(istream &, Time &);
   friend ostream &operator<<(ostream &, const Time &);

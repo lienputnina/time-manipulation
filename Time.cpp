@@ -19,10 +19,10 @@ Time::Time(int timeHour, int timeMinute, int timeSecond) {
 
 istream &operator>>(istream &input, Time &timeObject) {
 
-  // Tracking the validity of the user input
-  bool inputIsValid = false;
+  // Used to track the validity of the user input
+  bool isInputValid = false;
 
-  while (!inputIsValid) {
+  while (!isInputValid) {
     cout << "Please, enter hours, minutes and seconds separated by spaces"
          << endl;
 
@@ -31,13 +31,14 @@ istream &operator>>(istream &input, Time &timeObject) {
     // Reading the whole line of input
     getline(input, line);
 
-    // Facilitating parsing of the line
+    // Needed to parse a line
     stringstream timeInputStream(line);
 
     // Attempting to parse the input
     timeInputStream >> timeObject.hour >> timeObject.minute >>
         timeObject.second;
 
+    // If the attempt was not successful
     if (timeInputStream.fail()) {
       cout << "Invalid input. Please, enter three integers separated by "
               "spaces.\n";
@@ -46,7 +47,9 @@ istream &operator>>(istream &input, Time &timeObject) {
       input.clear();
       // Ignore the rest of the line to start fresh on the next input
       input.ignore(numeric_limits<streamsize>::max(), '\n');
-    } else {
+    }
+    // If attempt was successful and input is valid
+    else {
       // Validating the parsed time values
       timeObject.hour =
           (timeObject.hour >= 0 && timeObject.hour < 24) ? timeObject.hour : 0;
@@ -56,8 +59,8 @@ istream &operator>>(istream &input, Time &timeObject) {
       timeObject.second = (timeObject.second >= 0 && timeObject.second < 60)
                               ? timeObject.second
                               : 0;
-      inputIsValid =
-          true; // Setting the variable to true as the input is now valid
+
+      isInputValid = true;
     }
   }
 
@@ -66,8 +69,7 @@ istream &operator>>(istream &input, Time &timeObject) {
 
 ostream &operator<<(ostream &output, const Time &timeObject) {
   /*
-    Formatting time in hh:mm:ss format with leading zeros for single-digit
-    values
+    Formatting time in hh:mm:ss
   */
   output << setw(2) << setfill('0') << timeObject.hour << ":" << setw(2)
          << setfill('0') << timeObject.minute << ":" << setw(2) << setfill('0')
@@ -76,16 +78,22 @@ ostream &operator<<(ostream &output, const Time &timeObject) {
 }
 
 Time &Time::operator++() {
-  // Incrementing minutes
-  ++second;
+  // Incrementing seconds
+  second++;
   if (second == 60) {
     // Incrementing minutes, when the last value of seconds is reached
-    ++minute;
+    minute++;
     // Resetting seconds, when their last value is reached
     second = 0;
     if (minute == 60) {
+      // Incrementing hours, when the last value of minutes is reached
+      hour++;
       // Resetting minutes, when their last value is reached
       minute = 0;
+      if (hour == 24) {
+        // Resetting hours, if their last value is reached
+        hour = 0;
+      }
     }
   }
   return *this;
@@ -117,17 +125,20 @@ Time Time::operator++(int) {
 
 Time &Time::operator--() {
   /*
-   Decrementing minutes if the first value of seconds is reached
+   If the first allowed value of seconds is reached, then decrement minutes
   */
   if (second == 0) {
     if (minute > 0) {
-      --minute;
-
+      minute--;
       // Decrementing seconds to their penultimate value
       second = 59;
     }
-  } else {
-    // Decrementing seconds
+    if (minute == 0) {
+      hour--;
+    }
+  }
+  // Otherwise - decrement seconds
+  else {
     --second;
   }
   return *this;
@@ -139,11 +150,11 @@ Time Time::operator--(int) {
     */
   Time initialState = *this;
 
+  /*
+   If the first allowed value of minutes is reached, then decrement hours
+  */
   if (minute == 0) {
     if (hour > 0) {
-      /*
-         Decrementing hours if the first value of minutes is reached
-        */
       hour--;
       // Decrementing minutes to their penultimate value
       minute = 59;
@@ -184,35 +195,37 @@ Returns true, if:
 
 bool Time::operator>=(const Time &rightHandObject) const {
   /*
-  Returns true, if the left-hand-side object is not smaller than the
-  right-hand-side object
+  Returns true, if the first time object is not smaller than the
+  second time object
   */
   return !(*this < rightHandObject);
 };
 
 bool Time::operator<=(const Time &rightHandObject) const {
   /*
- Returns true, if the left-hand-side object is not bigger than the
- right-hand-side object
+ Returns true, if if the first time object is not bigger than the
+ second time object
  */
   return !(*this > rightHandObject);
 };
 
 bool Time::operator==(const Time &rightHandObject) const {
+  // Returns true if hours, minutes and seconds are all equal
   return hour == rightHandObject.hour && minute == rightHandObject.minute &&
          second == rightHandObject.second;
 };
 
 bool Time::operator!=(const Time &rightHandObject) const {
   /*
-Returns true, if the left-hand-side object is not equal to the
-right-hand-side object
+  Returns true, if the first time object is not equal to the
+  second time object
 */
   return !(*this == rightHandObject);
 };
 
 /*
-Assigns all values of the left-hand-side object to the right-hand-side object
+  Assigns hours, minutes and seconds of the first time object to the second time
+  object values
 */
 Time &Time::operator=(const Time &rightHandObject) {
   if (this != &rightHandObject) {
