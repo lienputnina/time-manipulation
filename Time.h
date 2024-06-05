@@ -8,7 +8,9 @@ class Time {
 
   /*
   Declaring friendly functions for input/output operators.
-  This approach allows the Time class to use 'cin' and 'cout' streams
+  This approach allows the Time class to use 'cin' and 'cout' streams.
+  "friend" can access the private and protected elements of the class.
+  Don't use without a special need. Less "friends", safer data.
   */
   friend istream &operator>>(istream &, Time &);
   friend ostream &operator<<(ostream &, const Time &);

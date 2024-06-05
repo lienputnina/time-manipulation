@@ -22,6 +22,7 @@ istream &operator>>(istream &input, Time &timeObject) {
   // Used to track the validity of the user input
   bool isInputValid = false;
 
+  // while isInput valid = true => while input is valid
   while (!isInputValid) {
     cout << "Please, enter hours, minutes and seconds separated by spaces"
          << endl;
@@ -96,7 +97,7 @@ Time &Time::operator++() {
       }
     }
   }
-  return *this;
+  return *this; // returning the value of the changed object
 };
 
 Time Time::operator++(int) {
@@ -203,7 +204,7 @@ bool Time::operator>=(const Time &rightHandObject) const {
 
 bool Time::operator<=(const Time &rightHandObject) const {
   /*
- Returns true, if if the first time object is not bigger than the
+ Returns true, if the first time object is not bigger than the
  second time object
  */
   return !(*this > rightHandObject);
